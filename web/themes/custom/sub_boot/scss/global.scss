@@ -1,0 +1,110 @@
+#main-wrapper {
+    background: linear-gradient(-45deg, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    .toast-wrapper {
+        font-family: initial;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} 
+
+header {
+    #navbar-top {
+        font-family: 'Square Peg', cursive;
+        background-color: #0079C0 !important;
+        padding-right: 15%;
+        a {
+            font-size: 25px;
+            font-weight: bold;
+        }
+    }
+}
+
+#sidebar_first {
+    display: none;
+}
+
+div.content {
+    font-size: 30px;
+    font-family: 'Square Peg', cursive;
+}
+
+div.process-heading {
+    font-size: 50px;
+    text-align: center;
+    &::before {
+        content: "\1F4F8";
+        margin-right: 10px;
+    }
+}
+
+.zin-catform-form {
+    button {
+        font-size: 20px;
+    }
+}
+
+#edit-name, #edit-email, #edit-image-upload {
+    font-size: 25px;
+}
+
+#edit-name--description, #edit-email--description, #edit-image--description {
+    color: white !important;
+    font-size: 20px;
+    float: right;
+}
+
+div.email-validation-message {
+    font-weight: bold;  
+}
+
+fieldset.form-type-email {
+    margin-bottom: 0px !important;
+}
+
+.messages__wrapper {
+    font-weight: bold;
+}
+
+.ui-widget-overlay {
+    position: relative !important;
+}
+
+.ui-widget-overlay {
+    opacity: 0.3;
+}
+
+.ui-dialog {
+    border-radius: 10px;
+}
+
+#drupal-modal {
+    font-family: 'Square Peg';
+    button, button.ui-dialog-buttonset {
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid;
+        font-family: 'Square Peg';
+    }
+    fieldset {
+        label {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        input {
+            font-family: 'Square Peg';
+            font-size: 25px;
+        }
+    }
+}

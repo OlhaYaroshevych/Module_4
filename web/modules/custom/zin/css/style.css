@@ -1,0 +1,95 @@
+th {
+  text-align: center !important;
+}
+
+td {
+  max-width: 80px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+input.form-control {
+  font-weight: bold;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  cursor: pointer;
+}
+
+#year-cell input {
+  background-color: lightblue;
+  border-color: #0079c0;
+  border-width: 2px;
+  cursor: not-allowed;
+}
+
+#sum-cell input {
+  background-color: rgb(166, 252, 166);
+  border-color: #1d8347;
+  border-width: 2px;
+  color: #1d8347;
+  cursor: not-allowed;
+}
+
+input.button {
+  font-size: 20px;
+  min-width: 70px;
+  border-color: transparent;
+  border-width: 2px;
+  margin-right: 5px;
+  margin-top: 15px;
+}
+
+input.button:hover {
+  color: lightgreen;
+  background-color: #0079c0;
+  border-color: lightgreen;
+  border-width: 2px;
+  text-decoration: none;
+}
+
+div.alert {
+  border-color: lightgreen;
+  border-width: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div.alert-error {
+  border-color: red;
+}
+
+.btn-close {
+  padding: 13px 10px !important;
+}
+
+div.navbar-brand {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 30px 0px;
+}
+
+div.navbar-brand a:hover {
+  color: lightgreen;
+  text-decoration: none;
+}
+
+/* Commented styles are needed for the sub-boot subtheme.
+ #zin-table button {
+  font-size: 20px;
+  min-width: 70px;
+  border-color: transparent;
+  border-width: 2px;
+  margin-right: 5px;
+  margin-top: 15px;
+}
+
+#zin-table button:hover {
+  color: lightgreen;
+  background-color: #0079c0;
+  border-color: lightgreen;
+  border-width: 2px;
+  text-decoration: none;
+} */

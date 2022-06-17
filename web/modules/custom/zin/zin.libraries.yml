@@ -1,0 +1,5 @@
+# Custom module library for general purposes.
+zin-css:
+  css:
+    theme:
+      css/style.css: { }

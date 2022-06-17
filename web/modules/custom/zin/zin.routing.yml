@@ -1,0 +1,7 @@
+zin.content:
+  path: '/zin'
+  defaults:
+    _form: '\Drupal\zin\Form\ZinForm'	
+  requirements:
+    _permission: 'access content'
+

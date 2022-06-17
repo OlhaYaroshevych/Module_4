@@ -1,0 +1,6 @@
+name: zin
+type: module
+description: This module creates a page with an accounting sheet with a complex validation mechanism.
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
