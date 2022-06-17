@@ -127,15 +127,6 @@
             'reference' => '9ef08d471573d6a56405b06ef6830dd70c883072',
             'dev_requirement' => false,
         ),
-        'dealerdirect/phpcodesniffer-composer-installer' => array(
-            'pretty_version' => 'v0.7.2',
-            'version' => '0.7.2.0',
-            'type' => 'composer-plugin',
-            'install_path' => __DIR__ . '/../dealerdirect/phpcodesniffer-composer-installer',
-            'aliases' => array(),
-            'reference' => '1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db',
-            'dev_requirement' => false,
-        ),
         'dflydev/dot-access-data' => array(
             'pretty_version' => 'v1.1.0',
             'version' => '1.1.0.0',
@@ -297,15 +288,6 @@
             'replaced' => array(
                 0 => '9.3.14',
             ),
-        ),
-        'drupal/coder' => array(
-            'pretty_version' => '8.3.15',
-            'version' => '8.3.15.0',
-            'type' => 'phpcodesniffer-standard',
-            'install_path' => __DIR__ . '/../drupal/coder',
-            'aliases' => array(),
-            'reference' => '0cfad3a21f1168bdc3030ae73351c31f88abba74',
-            'dev_requirement' => false,
         ),
         'drupal/color' => array(
             'dev_requirement' => false,
@@ -1117,15 +1099,6 @@
             'reference' => 'b14fbe2ddb0b9f94f5b24cf08783d599f776fff0',
             'dev_requirement' => false,
         ),
-        'phpstan/phpdoc-parser' => array(
-            'pretty_version' => '1.6.3',
-            'version' => '1.6.3.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../phpstan/phpdoc-parser',
-            'aliases' => array(),
-            'reference' => '4a07085f74cb1f3fc7103efa537d9f00ebb74ec7',
-            'dev_requirement' => false,
-        ),
         'psr/cache' => array(
             'pretty_version' => '1.0.1',
             'version' => '1.0.1.0',
@@ -1237,33 +1210,6 @@
             'replaced' => array(
                 0 => '*',
             ),
-        ),
-        'sirbrillig/phpcs-variable-analysis' => array(
-            'pretty_version' => 'v2.11.3',
-            'version' => '2.11.3.0',
-            'type' => 'phpcodesniffer-standard',
-            'install_path' => __DIR__ . '/../sirbrillig/phpcs-variable-analysis',
-            'aliases' => array(),
-            'reference' => 'c921498b474212fe4552928bbeb68d70250ce5e8',
-            'dev_requirement' => false,
-        ),
-        'slevomat/coding-standard' => array(
-            'pretty_version' => '7.2.1',
-            'version' => '7.2.1.0',
-            'type' => 'phpcodesniffer-standard',
-            'install_path' => __DIR__ . '/../slevomat/coding-standard',
-            'aliases' => array(),
-            'reference' => 'aff06ae7a84e4534bf6f821dc982a93a5d477c90',
-            'dev_requirement' => false,
-        ),
-        'squizlabs/php_codesniffer' => array(
-            'pretty_version' => '3.7.0',
-            'version' => '3.7.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../squizlabs/php_codesniffer',
-            'aliases' => array(),
-            'reference' => 'a2cd51b45bcaef9c1f2a4bda48f2dd2fa2b95563',
-            'dev_requirement' => false,
         ),
         'stack/builder' => array(
             'pretty_version' => 'v1.0.6',

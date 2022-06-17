@@ -228,86 +228,6 @@ class ZinForm extends FormBase {
   /**
    * {@inheritdoc}
    *
-   * Arrays identity check.
-   * Deleting all non-empty values in order to detect arrays identity.
-   */
-  public function arraysIdentityCheck(array $arr_one, array $arr_two): bool {
-    $arr_one = array_filter($arr_one, function ($k) {
-      return $k === '';
-    }, ARRAY_FILTER_USE_BOTH);
-    $arr_two = array_filter($arr_two, function ($k) {
-      return $k === '';
-    }, ARRAY_FILTER_USE_BOTH);
-    return $arr_one !== $arr_two;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * Form validation mechanism.
-   */
-  public function arrayIsNotList(array $array): bool {
-    return array_values($array) !== $array;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * Form validation mechanism.
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    if ($form_state->getErrors()) {
-      $this->messenger()->addError('Invalid');
-      $form_state->clearErrors();
-    }
-    $data = $this->getFormData($form_state);
-    foreach ($data as $table_id => $table) {
-      foreach ($table as $rowID => $row) {
-        foreach ($row as $key => $value) {
-          // For each table, stored all rows in one array.
-          $tables[$table_id][] = $value;
-          $index = 0;
-          // The intermediate array.
-          $buffer[$table_id] = $tables[$table_id];
-          // Deleting empty values before the first entered value.
-          while (empty($buffer[$table_id][$index]) && $index < count($tables[$table_id]) && $buffer[$table_id][$index] !== '0') {
-            unset($buffer[$table_id][$index]);
-            $index++;
-          }
-          // Re-indexed arrays.
-          $tablesReindex[$table_id] = array_values($buffer[$table_id]);
-          for ($i = 0; $i < count($buffer[$table_id]); $i++) {
-            if (empty($tablesReindex[$table_id][$i]) && $tablesReindex[$table_id][$i] !== '0') {
-              unset($tablesReindex[$table_id][$i]);
-            }
-          }
-        }
-        // Months gap check (the period given should not have gaps between months).
-        foreach ($tablesReindex as $item) {
-          if ($this->arrayIsNotList($item)) {
-            $form_state->setErrorByName($table_id, $this->t('The row should not contain spaces between months'));
-          }
-        }
-        // Tables identity check (the periods given in tables have to be equal).
-        if ($table_id !== 'table_0' && $this->arraysIdentityCheck($row, $data['table_0'][$rowID])) {
-          $form_state->setError($form[$table_id][$rowID], $this->t('Invalid. The periods given do not coincide.'));
-        }
-      }
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * Updating the page.
-   */
-  public function submitAjax(array $form, FormStateInterface $form_state): array {
-    return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
    * Getting values from the zin form.
    */
   public function getFormData(FormStateInterface $form_state): array {
@@ -333,6 +253,74 @@ class ZinForm extends FormBase {
       $data[$table_id] = $table;
     }
     return $data;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Arrays identity check.
+   * Deleting all non-empty values in order to detect arrays identity.
+   */
+  public function arraysIdentityCheck(array $arr_one, array $arr_two): bool {
+    $arr_one = array_filter($arr_one, function ($k) {
+      return $k === '';
+    }, ARRAY_FILTER_USE_BOTH);
+    $arr_two = array_filter($arr_two, function ($k) {
+      return $k === '';
+    }, ARRAY_FILTER_USE_BOTH);
+    return $arr_one !== $arr_two;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Form validation mechanism.
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    if ($form_state->getErrors()) {
+      $form_state->clearErrors();
+    }
+    $data = $this->getFormData($form_state);
+    foreach ($data as $table_id => $table) {
+      foreach ($table as $rowID => $row) {
+        foreach ($row as $key => $value) {
+          // For each table, stored all rows in one array.
+          $tables[$table_id][] = $value;
+          $index = 0;
+          $additional[$table_id] = $tables[$table_id];
+          // Deleting empty values from the very begining.
+          while (empty($additional[$table_id][$index]) && $index < count($tables[$table_id]) && $additional[$table_id][$index] !== '0') {
+            unset($additional[$table_id][$index]);
+            $index++;
+          }
+          $tablesNumber[$table_id] = array_values($additional[$table_id]);
+          for ($i = 0; $i < count($additional[$table_id]); $i++) {
+            if (empty($tablesNumber[$table_id][$i]) && $tablesNumber[$table_id][$i] !== '0') {
+              unset($tablesNumber[$table_id][$i]);
+            }
+          }
+        }
+        // Months gap check (the period given should not have gaps between months).
+        foreach ($tablesNumber as $item) {
+          if (array_values($item) !== $item) {
+            $form_state->setErrorByName($table_id, $this->t('The row should not contain spaces between months'));
+          }
+        }
+        // Tables identity check (the periods given in tables have to be equal).
+        if ($table_id !== 'table_0' && $this->arraysIdentityCheck($row, $data['table_0'][$rowID])) {
+          $form_state->setError($form[$table_id][$rowID], $this->t('Invalid. The periods given do not coincide.'));
+        }
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Updating the page.
+   */
+  public function submitAjax(array $form, FormStateInterface $form_state): array {
+    return $form;
   }
 
   /**

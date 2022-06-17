@@ -19,7 +19,6 @@
         "drupal/admin_toolbar": "^3.1",
         "drupal/bootstrap5": "^1.1",
         "drupal/bootstrap_sass": "^5.0",
-        "drupal/coder": "^8.3",
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-project-message": "^9",
         "drupal/core-recommended": "^9",
@@ -35,8 +34,7 @@
         "allow-plugins": {
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
-            "drupal/core-project-message": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "drupal/core-project-message": true
         }
     },
     "extra": {
