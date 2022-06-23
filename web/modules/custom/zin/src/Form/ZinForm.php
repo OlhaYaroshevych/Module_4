@@ -142,18 +142,16 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Function for building rows.
    */
   public function buildRow(string $table_id, array &$form, FormStateInterface $form_state) {
     for ($i = $this->rowsAmount; $i > 0; $i--) {
-      $rowID = 'row_' . $i;
+      $row_id = 'row_' . $i;
       // Building three types of cells.
       for ($z = 0; $z < count($this->heading); $z++) {
         // Building cells with year numbers.
         if ($this->heading[$z] === 'Year') {
-          $form[$table_id][$rowID][$this->heading[$z]] = [
+          $form[$table_id][$row_id][$this->heading[$z]] = [
             '#type' => 'number',
             '#value' => date('Y') + 1 - $i,
             '#disabled' => TRUE,
@@ -163,11 +161,11 @@ class ZinForm extends FormBase {
         }
         elseif (in_array($this->heading[$z], $this->cellsWithSum, TRUE)) {
           // Building empty cells for storage of summative values.
-          $form[$table_id][$rowID][$this->heading[$z]] = [
+          $form[$table_id][$row_id][$this->heading[$z]] = [
             '#type' => 'number',
             '#value' => $form_state->getValue([
               $table_id,
-              $rowID,
+              $row_id,
               $this->heading[$z],
             ], ''),
             '#disabled' => TRUE,
@@ -177,7 +175,7 @@ class ZinForm extends FormBase {
         }
         else {
           // Building cells for data input.
-          $form[$table_id][$rowID][$this->heading[$z]] = [
+          $form[$table_id][$row_id][$this->heading[$z]] = [
             '#type' => 'number',
           ];
         }
@@ -186,8 +184,6 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Building needed number of rows.
    */
   public function addRow(array &$form, FormStateInterface $form_state): array {
@@ -197,8 +193,6 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Function for building a table.
    */
   public function buildTable(&$form, FormStateInterface $form_state) {
@@ -215,8 +209,6 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Building needed number of tables.
    */
   public function addTable(array &$form, FormStateInterface $form_state): array {
@@ -226,8 +218,6 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Getting values from the zin form.
    */
   public function getFormData(FormStateInterface $form_state): array {
@@ -242,13 +232,13 @@ class ZinForm extends FormBase {
       }
     }
     foreach ($data as $table_id => $table) {
-      foreach ($table as $rowID => $row) {
+      foreach ($table as $row_id => $row) {
         foreach ($row as $key => $value) {
           if (in_array($key, $this->cellsWithSum, TRUE) || $key === 'Year') {
             unset($row[$key]);
           }
         }
-        $table[$rowID] = $row;
+        $table[$row_id] = $row;
       }
       $data[$table_id] = $table;
     }
@@ -256,9 +246,8 @@ class ZinForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Arrays identity check.
+   *
    * Deleting all non-empty values in order to detect arrays identity.
    */
   public function arraysIdentityCheck(array $arr_one, array $arr_two): bool {
@@ -282,7 +271,7 @@ class ZinForm extends FormBase {
     }
     $data = $this->getFormData($form_state);
     foreach ($data as $table_id => $table) {
-      foreach ($table as $rowID => $row) {
+      foreach ($table as $row_id => $row) {
         foreach ($row as $key => $value) {
           // For each table, stored all rows in one array.
           $tables[$table_id][] = $value;
@@ -300,23 +289,22 @@ class ZinForm extends FormBase {
             }
           }
         }
-        // Months gap check (the period given should not have gaps between months).
+        // Months gap check.
+        // The period given should not have gaps between months.
         foreach ($tablesNumber as $item) {
           if (array_values($item) !== $item) {
             $form_state->setErrorByName($table_id, $this->t('The row should not contain spaces between months'));
           }
         }
         // Tables identity check (the periods given in tables have to be equal).
-        if ($table_id !== 'table_0' && $this->arraysIdentityCheck($row, $data['table_0'][$rowID])) {
-          $form_state->setError($form[$table_id][$rowID], $this->t('Invalid. The periods given do not coincide.'));
+        if ($table_id !== 'table_0' && $this->arraysIdentityCheck($row, $data['table_0'][$row_id])) {
+          $form_state->setError($form[$table_id][$row_id], $this->t('Invalid. The periods given do not coincide.'));
         }
       }
     }
   }
 
   /**
-   * {@inheritdoc}
-   *
    * Updating the page.
    */
   public function submitAjax(array $form, FormStateInterface $form_state): array {
@@ -336,7 +324,7 @@ class ZinForm extends FormBase {
     else {
       $data = $this->getFormData($form_state);
       foreach ($data as $table_id => $table) {
-        foreach ($table as $rowID => $row) {
+        foreach ($table as $row_id => $row) {
           // Setting up initial values of summative cells.
           $q1 = 0;
           $q2 = 0;
@@ -359,15 +347,20 @@ class ZinForm extends FormBase {
             $ytd = round(($q1 + $q2 + $q3 + $q4 + 1) / 4, 2);
           }
           else {
-            $this->messenger()->addError('Invalid. Empty rows and year gaps are not allowed.');
-            return FALSE;
+            if ($row_id == 'row_1') {
+              $this->messenger()->addError('Invalid. At least one value have to be inserted.');
+              return FALSE;
+            }
+            else {
+              $ytd = 0;
+            }
           }
           // Data output into summative cells.
-          $form_state->setValue([$table_id, $rowID, 'Q1'], $q1);
-          $form_state->setValue([$table_id, $rowID, 'Q2'], $q2);
-          $form_state->setValue([$table_id, $rowID, 'Q3'], $q3);
-          $form_state->setValue([$table_id, $rowID, 'Q4'], $q4);
-          $form_state->setValue([$table_id, $rowID, 'YTD'], $ytd);
+          $form_state->setValue([$table_id, $row_id, 'Q1'], $q1);
+          $form_state->setValue([$table_id, $row_id, 'Q2'], $q2);
+          $form_state->setValue([$table_id, $row_id, 'Q3'], $q3);
+          $form_state->setValue([$table_id, $row_id, 'Q4'], $q4);
+          $form_state->setValue([$table_id, $row_id, 'YTD'], $ytd);
         }
       }
       $this->messenger->addStatus('Data is valid.');
